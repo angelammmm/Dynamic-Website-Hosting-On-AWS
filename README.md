@@ -70,7 +70,7 @@ SSH access from the bastion host.
 <h2> 6.Install LAMP Stack on Application Servers</h2>
 
 SSH into application servers via the bastion host.
-
+```
 Install Apache, PHP, and required modules:
 #1. update ec2 instance
 sudo su
@@ -96,7 +96,7 @@ sudo chown -R ec2-user:apache /var/www
 sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
 sudo find /var/www -type f -exec sudo chmod 0664 {} \;
 #6. download the webfiles from s3 to the html derectory on the ec2 instance
-sudo aws s3 sync s3://aosnotes77-fleetcart-web-files /var/www/html
+sudo aws s3 sync s3://Your-web-files /var/www/html #Replace S3 Link With Your Own 
 #7. unzip the Webfile folder
 cd /var/www/html
 sudo unzip (webfilename).zip
@@ -109,7 +109,7 @@ sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride No
 chown apache:apache -R /var/www/html 
 sudo service httpd restart
 Configure Apache to serve your application.
-
+```
 <h2>7. Set Up RDS for Database Layer</h2>
 
 Create a DB subnet group encompassing private database subnets.
