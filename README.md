@@ -72,7 +72,6 @@ SSH access from the bastion host.
 SSH into application servers via the bastion host.
 
 Install Apache, PHP, and required modules:
-'''
 #1. update ec2 instance
 sudo su
 sudo yum update -y
@@ -97,18 +96,18 @@ sudo chown -R ec2-user:apache /var/www
 sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
 sudo find /var/www -type f -exec sudo chmod 0664 {} \;
 #6. download the webfiles from s3 to the html derectory on the ec2 instance
-sudo aws s3 sync s3://your - S3 Bucket-web-files /var/www/html
+sudo aws s3 sync s3://aosnotes77-fleetcart-web-files /var/www/html
 #7. unzip the Webfile folder
 cd /var/www/html
 sudo unzip (webfilename).zip
 #8. move all the files and folder from the Webfile directory to the html directory
 sudo mv Webfilename/* /var/www/html
 #9. move all the hidden files from the Webfile Example Name diretory to the html directory
+
 #10. enable mod_rewrite on ec2 linux, add apache to group, and restart server
 sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
 chown apache:apache -R /var/www/html 
 sudo service httpd restart
-'''
 Configure Apache to serve your application.
 
 <h2>7. Set Up RDS for Database Layer</h2>
