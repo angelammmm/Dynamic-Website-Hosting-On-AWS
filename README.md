@@ -1,4 +1,5 @@
 Are you ready to take your website to the next level ? For this project I will be guiding you on how to build a 3 tier VPC from scratch using LAPM Stack to optimize your websites storage and networking performance. Using the following architecture I will show you how to deploy a website hosted on Amazon Workspace. 
+https://miro.medium.com/v2/resize:fit:1100/format:webp/1*5EtHb4fY-L2S7hsD9yuUzA.png
 
 
 Step 1. We’ll start by selecting our availability zones we would like our VPC to be in. To change your region, navigate to the top right-hand corner of your console and click on the drop on and select the US East (N. Virginia) region.
