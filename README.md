@@ -69,7 +69,7 @@ SSH access from the bastion host.
 
 <h2> 6.Install LAMP Stack on Application Servers</h2>
 
-SSH into application servers via the bastion host.
+SSH into application servers via the bastion host. And enter the following commands. 
 ```
 Install Apache, PHP, and required modules:
 #1. update ec2 instance
@@ -133,6 +133,6 @@ Verify security group configurations to allow necessary traffic while restrictin
 Test the application via the ALB DNS name. To ensure your website is viewable with your unique DNS Name.  
 
 
-For a visual demonstration and further insights, you may find the following Medium Article helpful:(https://medium.com/devops-dev/how-to-build-a-3-tier-vpc-in-aws-using-lamp-stack-dcb66b7095bd)
+For a visual demonstration and further insights, check out my article were i dive deep in the LAMP Stack Setup Medium Article helpful:(https://medium.com/devops-dev/how-to-build-a-3-tier-vpc-in-aws-using-lamp-stack-dcb66b7095bd)
 
 
