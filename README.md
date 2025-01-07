@@ -1,15 +1,7 @@
-Are you ready to take your website to the next level ? For this project I will be guiding you on how to build a 3 tier VPC from scratch using LAPM Stack to optimize your websites storage and networking performance. Using the following architecture I will show you how to deploy a website hosted on Amazon Workspace. In the prerequisite section I have listed the topics that you should be familiar with before starting. If some of the prerequisites are not familiar to you, no problem I will provide a glossary as well.
-
-Prerequisites
-
-Understanding of basic networking concepts such as DNS (Domain Name Service), Route tables, subnets and firewalls.
-Knowledge of AWS services like VPC, Availability Regions, S3 Buckets, Application load balancer, EC2, and Route 53.
-For this project a you are a consultant for a car rental company that wants to move their data from physical servers to the cloud. They want to host their website on AWS with high availability. And are needing to update their security policies to ensure their end users data is safe. We have created the following architecture.
+Are you ready to take your website to the next level ? For this project I will be guiding you on how to build a 3 tier VPC from scratch using LAPM Stack to optimize your websites storage and networking performance. Using the following architecture I will show you how to deploy a website hosted on Amazon Workspace. 
 
 
-Lets get started!
-
-Step 1. We’ll start by selecting our availability zones we would like our VPC to be in. To change your region navigate to the top right hand corner of your console and click on the drop on and select the US East (N. Virginia) region.
+Step 1. We’ll start by selecting our availability zones we would like our VPC to be in. To change your region, navigate to the top right-hand corner of your console and click on the drop on and select the US East (N. Virginia) region.
 
 
 Step 2. In the top left search box type VPC under services select VPC again. Under Virtual and Private cloud select your VPCs and select create your VPC in the right hand corner. Make sure to select VPC only and give your VPC a name. For this project I will name it “Dev VPC” and select IPv4 CIDR block. And for the IPv4 CIDR we will give it the IP address of 10.0.0.0/16 according to our architecture suggestion. And we will then select no IPV6 CIDR block and set the tendency as default then select create VPC.
@@ -25,7 +17,7 @@ Step 4. Create a internet gateway for our VPC. Under Virtual Private Cloud selec
 
 Now we will need to attach our internet gateway to our VPC to allow it to communicate with the internet. While on your internet gateway select attach to a VPC on the green banner. Under available VPC’s it will show the VPC we have made. Only one internet gateway can be attached to a VPC at a time.
 
-Step 5. Enter our public subnets in our first availability zone. On the right hand corner select subnets then create subnet. And select Dev VPC for the subnet name we will want to name it “Public Subnet AZ1”. According to our architecture we will want it to be under the availability zone US East (N.Virginia) / us-east-1a. Under IPv4 cidr block we will want to enter 10.0.0.0/24 once you have entered the cider block select create subnet.
+Step 5. Enter our public subnets in our first availability zone. On the right-hand corner, select subnets, then create a subnet. Select Dev VPC for the subnet name. We will want to name it “Public Subnet AZ1.” According to our architecture, we will want it to be under the availability zone US East (N.Virginia) / us-east-1a. Under the IPv4 cidr block, we will want to enter 10.0.0.0/24. Once you have entered the cider block, select create subnet.
 
 
 For the next subnet we will want to follow the same steps for the first subnet but we will create the subnet “Public Subnet AZ2”. For availability zone we will select US East (N.Virginia) / us-east-1b and enter the cidr block as 10.0.1.0/24 and select create subnet. Once we have created the public subnets we will want to enable auto assign IP settings so anytime we launch an EC2 instance it will get a public IPv4 address.
@@ -53,14 +45,6 @@ We will want to replicate this process for the remaining 3 private subnets based
 
 To ensure all subnets have been made correctly select subnets in your VPC Dashboard and filter by name there you should every subnet associated to your VPC. All subnets should be listed to ensure all subnets are created in the correct availability zone please check the architecture above.
 
-Understanding Route tables
-
-It is important to note that we created public and private subnets and subnets associated with the Public Route Table we made can be accessed through the internet. For the default route table that we made is by default private and not accessible to the internet when we created the four private subnets we did not need to associate it to a route table manually. It automatically associated itself to the only private route table we have the original route table made when the VPC was created.
-
-You can check this by navigating to route tables and there you will see all route table when selecting the public route table box. And selecting subnet associations our public subnets should be listed.
-
-
-The same method can be applied for our private route table under explicite subnet associates all our private subnets should be listed.
 
 
 Step 9- Create NAT Gateways in the public subnet, in order for the private subnets to access the internet. We will add a route from the Private App and Data Subnet from the Private Route Table AZ1 to route to the NAT Gateway to the internet gateway. By doing this we are “tunneling” a safe passage for our private subnets to communicate to the internet.
@@ -69,7 +53,7 @@ Step 9- Create NAT Gateways in the public subnet, in order for the private subne
 To associate the route table with the internet gateway we will navigate to the route table and click associations. And navigate to edit subnet associations and select Private App Subnet AZ1 as well as Private Data Subnet AZ1 and click save.
 
 
-Once you have hit save, you will be directed to your VPC dashboard and will navigate to the left and click on Nat Gateways. Then click create NAT Gateway, and we will name it “NAT Gateway AZ2” and put the subnet in Public Subnet AZ2 and select public connection type. Then select allocate an elastic IP address to assign the NAT Gateway an IP address and select create NAT Gateway.
+Once you have hit save, you will be directed to your VPC dashboard and will navigate to the left and click on Nat Gateways. Then click create NAT Gateway, and we will name it “NAT Gateway AZ2” and put the subnet in Public Subnet AZ2 and select public connection type. Then select Allocate an elastic IP address to assign the NAT Gateway an IP address and select Create NAT Gateway.
 
 
 After we will create another NAT Gateway in public subnet AZ2 and add another route to our new Private Route Table AZ2 to route traffic through the internet gateway. By creating to separate NAT Gateways associated with Private and Public subnets we are limiting the threat of having a single point of failure from having only one gateway and ensuring reliability by having a second in a different availability zone
@@ -336,29 +320,3 @@ Maximum- 4 EC2 instances running at once.
 Leave the rest as default once you have created your application load balancer. To test that you have created the auto scalling group correctly. You can terminate our EC2 instances Web Server AZ1 and Web Server AZ2. With our balancer it will have created two more instances to take its place with the name “ASG-Webserver”. And our instances will automatically grow or decrease when needed automatically with our website pre confirgured.
 
 Congratulations you have finished this project!
-
-Glossary
-
-DNS-Next we will want to enable DNS hostname (Domain Name Service) in order to translate IP addresses into site names. For example instead of having to type Amazons IP address to get to the website we would just enter the Amazon.com and automatically get routed to the website.
-
-Route Table- Is a set of rules, known as routes that determines were network traffic gets directed. Each VPC (Virtual Private Cloud) is associated with a route table that controls the flow of traffic between subnets.
-
-Public Subnet-Is a subnet associated with a route table that has a subnet to an internet gateway. This connects your VPC to the internet for example if a subnet is set to 10.0.0.0 then it can be accessed by the internet if it does not have a public IP then it is unavailable to those who try to access it from the internet.
-
-Private Subnet- A private subnet that is routed to a route table without an internet gateway. Is not able to be accessed through the internet. And cannot reach out to the internet without administrator intervention. For enterprise companies it is critical that they are using private subnets to hold sensitive information such as app information and servers.
-
-VPC (Virtual Private Cloud)- Is a virtual private network that is dedicated to designated cloud space that is isolated to hold specified EC2 instances, subnets, gateways and associated security groups.
-
-Security Groups- Acts as a firewall that allows you to specify what traffic is allowed in and out of your VPC. You can specify which ports you have open or closed to allow for inbound or outbound traffic.
-
-RDS-Amazon Relational Database Service (Amazon RDS) is a collection of managed services that makes it simple to set up, operate, and scale databases in the cloud. You can choose from popular databases such as MySQL.
-
-S3 Buckets- Amazon S3 is an object storage service that stores data as objects within buckets. An object is a file and any metadata that describes the file. A bucket is a container for objects.
-
-Load Balancer- handles incoming requests from users for information and other services. They sit between the servers that handle those requests and the internet. Once a request is received, the load balancer first determines which server in a pool is available and online and then routes the request to that server. Network Load Balancers and Classic Load Balancers are used to route TCP (or Layer 4) traffic.
-
-Application Load Balancer- The application load balancer distributes incoming application traffic across multiple targets, such as EC2 instances, in multiple Availability Zones. This increases the availability of your application.
-
-Route 53- Is Amazon Workspace’s built in Domain Name System used to register a Domain Name and DNS Routing.
-
-Auto Scaling- AWS Auto Scaling monitors your applications and automatically adjusts capacity to maintain steady, predictable performance at the lowest possible cost. For example if your application receives an influx of data auto scaling will adjust your storage size to handle the data the same applies if your application has a drop in data.
