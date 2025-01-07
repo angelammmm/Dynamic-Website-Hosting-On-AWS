@@ -19,13 +19,13 @@ Architecture Overview
 
 Steps to Build the 3-Tier VPC
 
-1. <h2>Create a VPC</h2>
+ <h2>1.Create a VPC</h2>
 
 Define a VPC with CIDR block: 10.0.0.0/16
 
 Enable DNS hostnames for the VPC.
 
-2.<h2> Set Up Subnets</h2>
+<h2> 2.Set Up Subnets</h2>
 
 Create public subnets for bastion host in multiple availability zones:
 
@@ -45,19 +45,19 @@ Private DB Subnet 2: 10.0.6.0/24
 
 ![Subnets](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aZOiS32lrN2F53PSKB3oDg.png)
 
-3.<h2> Configure Internet and NAT Gateways</h2>
+<h2>3.Configure Internet and NAT Gateways</h2>
 
 Attach an Internet Gateway to the VPC.
 
 Set up a NAT Gateway in the public subnet to allow private subnets to access the internet securely.
 
-4.<h2> Establish Route Tables</h2>
+<h2> 4.Establish Route Tables</h2>
 
 Create and associate a public route table with public subnets, routing traffic through the Internet Gateway.
 
 Create private route tables for application and database subnets, routing internet-bound traffic through the NAT Gateway.
 
-5.<h2> Launch EC2 Instances</h2>
+<h2> 5.Launch EC2 Instances</h2>
 
 Deploy a bastion host in the public subnet for SSH access.
 
@@ -67,12 +67,12 @@ HTTP access from the Load Balancer.
 
 SSH access from the bastion host.
 
-6. <h2>Install LAMP Stack on Application Servers</h2>
+<h2> 6.Install LAMP Stack on Application Servers</h2>
 
 SSH into application servers via the bastion host.
 
 Install Apache, PHP, and required modules:
-
+'''
 #1. update ec2 instance
 sudo su
 sudo yum update -y
@@ -108,10 +108,10 @@ sudo mv Webfilename/* /var/www/html
 sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
 chown apache:apache -R /var/www/html 
 sudo service httpd restart
-
+'''
 Configure Apache to serve your application.
 
-7. <h2>Set Up RDS for Database Layer</h2>
+<h2>7. Set Up RDS for Database Layer</h2>
 
 Create a DB subnet group encompassing private database subnets.
 
@@ -119,7 +119,7 @@ Launch an RDS instance with MySQL:
 
 Security groups allow connections only from application servers.
 
-8. <h2>Configure Application Load Balancer (ALB)</h2>
+ <h2>8.Configure Application Load Balancer (ALB)</h2>
 
 Set up an ALB in the public subnets.
 
@@ -127,7 +127,7 @@ Ensure ALB's security group allows inbound HTTP traffic.
 
 Register application servers with the ALB's target group.
 
-9. <h2>Finalize Security Groups and Testing</h2>
+ <h2>9.Finalize Security Groups and Testing</h2>
 
 Verify security group configurations to allow necessary traffic while restricting unauthorized access.
 
