@@ -3,7 +3,7 @@ This guide outlines the process of building a 3-tier Virtual Private Cloud (VPC)
 <h2> Prerequisites:</h2>
 
 - <b>Basic understanding of networking concepts: DNS, route tables, subnets, and firewalls.</b>
--[Familiarity with AWS services: VPC, EC2, RDS, and Application Load Balancer.]
+-[Familiarity with AWS services: VPC, EC2, RDS, and Application Load Balancer.]<b><i>
 
 Architecture Overview
 ![Demo](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*5EtHb4fY-L2S7hsD9yuUzA.png)
@@ -19,13 +19,13 @@ Architecture Overview
 
 Steps to Build the 3-Tier VPC
 
-1. Create a VPC
+1. <h2>Create a VPC</h2>
 
 Define a VPC with CIDR block: 10.0.0.0/16
 
 Enable DNS hostnames for the VPC.
 
-2. Set Up Subnets
+2.<h2> Set Up Subnets</h2>
 
 Create public subnets for bastion host in multiple availability zones:
 
@@ -45,19 +45,19 @@ Private DB Subnet 2: 10.0.6.0/24
 
 ![Subnets](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aZOiS32lrN2F53PSKB3oDg.png)
 
-3. Configure Internet and NAT Gateways
+3.<h2> Configure Internet and NAT Gateways</h2>
 
 Attach an Internet Gateway to the VPC.
 
 Set up a NAT Gateway in the public subnet to allow private subnets to access the internet securely.
 
-4. Establish Route Tables
+4.<h2> Establish Route Tables</h2>
 
 Create and associate a public route table with public subnets, routing traffic through the Internet Gateway.
 
 Create private route tables for application and database subnets, routing internet-bound traffic through the NAT Gateway.
 
-5. Launch EC2 Instances
+5.<h2> Launch EC2 Instances</h2>
 
 Deploy a bastion host in the public subnet for SSH access.
 
@@ -67,7 +67,7 @@ HTTP access from the Load Balancer.
 
 SSH access from the bastion host.
 
-6. Install LAMP Stack on Application Servers
+6. <h2>Install LAMP Stack on Application Servers</h2>
 
 SSH into application servers via the bastion host.
 
@@ -111,7 +111,7 @@ sudo service httpd restart
 
 Configure Apache to serve your application.
 
-7. Set Up RDS for Database Layer
+7. <h2>Set Up RDS for Database Layer</h2>
 
 Create a DB subnet group encompassing private database subnets.
 
@@ -119,7 +119,7 @@ Launch an RDS instance with MySQL:
 
 Security groups allow connections only from application servers.
 
-8. Configure Application Load Balancer (ALB)
+8. <h2>Configure Application Load Balancer (ALB)</h2>
 
 Set up an ALB in the public subnets.
 
@@ -127,13 +127,13 @@ Ensure ALB's security group allows inbound HTTP traffic.
 
 Register application servers with the ALB's target group.
 
-9. Finalize Security Groups and Testing
+9. <h2>Finalize Security Groups and Testing</h2>
 
 Verify security group configurations to allow necessary traffic while restricting unauthorized access.
 
-Test the application via the ALB DNS name.
+Test the application via the ALB DNS name. To ensure your website is viewable with your unique DNS Name.  
 
 
-For a visual demonstration and further insights, you may find the following Medium Article helpful:![Demo](https://medium.com/devops-dev/how-to-build-a-3-tier-vpc-in-aws-using-lamp-stack-dcb66b7095bd)
+For a visual demonstration and further insights, you may find the following Medium Article helpful:(https://medium.com/devops-dev/how-to-build-a-3-tier-vpc-in-aws-using-lamp-stack-dcb66b7095bd)
 
 
