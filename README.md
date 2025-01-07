@@ -7,6 +7,8 @@ Basic understanding of networking concepts: DNS, route tables, subnets, and fire
 Familiarity with AWS services: VPC, EC2, RDS, and Application Load Balancer.
 
 Architecture Overview
+![Demo](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*5EtHb4fY-L2S7hsD9yuUzA.png)
+
 
 The architecture consists of:
 
