@@ -44,6 +44,8 @@ Private DB Subnet 1: 10.0.5.0/24
 
 Private DB Subnet 2: 10.0.6.0/24
 
+![Subnets](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*aZOiS32lrN2F53PSKB3oDg.png)
+
 3. Configure Internet and NAT Gateways
 
 Attach an Internet Gateway to the VPC.
@@ -72,10 +74,42 @@ SSH into application servers via the bastion host.
 
 Install Apache, PHP, and required modules:
 
+#1. update ec2 instance
+sudo su
 sudo yum update -y
-sudo yum install httpd php php-mysql -y
+#2. install apache 
+sudo yum install -y httpd httpd-tools mod_ssl
+sudo systemctl enable httpd 
 sudo systemctl start httpd
-sudo systemctl enable httpd
+#3. install php 7.4
+sudo amazon-linux-extras enable php7.4
+sudo yum clean metadata
+sudo yum install php php-common php-pear -y
+sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip} -y
+#4. install mysql5.7
+sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+sudo rpm - import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+sudo yum install mysql-community-server -y
+sudo systemctl enable mysqld
+sudo systemctl start mysqld
+#5. set permissions
+sudo usermod -a -G apache ec2-user
+sudo chown -R ec2-user:apache /var/www
+sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+sudo find /var/www -type f -exec sudo chmod 0664 {} \;
+#6. download the webfiles from s3 to the html derectory on the ec2 instance
+sudo aws s3 sync s3://aosnotes77-fleetcart-web-files /var/www/html
+#7. unzip the Webfile folder
+cd /var/www/html
+sudo unzip (webfilename).zip
+#8. move all the files and folder from the Webfile directory to the html directory
+sudo mv Webfilename/* /var/www/html
+#9. move all the hidden files from the Webfile Example Name diretory to the html directory
+
+#10. enable mod_rewrite on ec2 linux, add apache to group, and restart server
+sudo sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
+chown apache:apache -R /var/www/html 
+sudo service httpd restart
 
 Configure Apache to serve your application.
 
@@ -102,5 +136,6 @@ Verify security group configurations to allow necessary traffic while restrictin
 Test the application via the ALB DNS name.
 
 
-For a visual demonstration and further insights, you may find the following Medium Article helpful:
+For a visual demonstration and further insights, you may find the following Medium Article helpful:![Demo](https://medium.com/devops-dev/how-to-build-a-3-tier-vpc-in-aws-using-lamp-stack-dcb66b7095bd)
+
 
